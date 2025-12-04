@@ -5,7 +5,7 @@ import {serve} from 'inngest/express';
 
 import { ENV } from './lib/env.js';
 import { connectDB } from './lib/db.js';
-import { inngest } from './lib/inngest.js';
+import { inngest, functions } from './lib/inngest.js';
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.get('/health', (req, res) => {
 });
 
 // Inngest webhook endpoint
-app.use('/api/inngest', serve({ client: inngest, functions: inngestFunctions }));
+app.use('/api/inngest', serve({ client: inngest, functions }));
 
 // Prepare for deployment
 if (ENV.NODE_ENV === 'production') {

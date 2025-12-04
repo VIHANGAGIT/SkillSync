@@ -11,9 +11,9 @@ const createUser = inngest.createFunction(
         await connectDB();
 
         // The Clerk user data payload
-        const {id, first_name, last_name, email_addresses, image_url} = event.data; 
+        const {id, first_name, last_name, email_addresses, image_url} = event.data;
 
-        new User = {
+        const newUser = {
             clerkId: id,
             name: `${first_name || ""} ${last_name || ""}`.trim(),
             email: email_addresses[0].email_address,
@@ -38,4 +38,4 @@ const deleteUser = inngest.createFunction(
     }
 )
 
-export const inngestFunctions = [createUser, deleteUser];
+export const functions = [createUser, deleteUser];
