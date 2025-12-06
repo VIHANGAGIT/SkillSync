@@ -1,11 +1,11 @@
 import { ENV } from './env.js';    
 import {StreamChat} from 'stream-chat';
 
-const apiKey = ENV.STREAM_API_KEY;
-const apiSecret = ENV.STREAM_API_SECRET;
+const apiKey = ENV.STREAM_ACCESS_KEY;
+const apiSecret = ENV.STREAM_SECRET_KEY;
 
 if (!apiKey || !apiSecret) {
-    throw new Error('STREAM_API_KEY and STREAM_API_SECRET must be set in environment variables.');
+    throw new Error('STREAM_ACCESS_KEY and STREAM_SECRET_KEY must be set in environment variables.');
 }
 
 export const streamChatClient = StreamChat.getInstance(apiKey, apiSecret);
