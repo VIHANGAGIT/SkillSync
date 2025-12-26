@@ -1,5 +1,6 @@
 import { ENV } from './env.js';    
-import {StreamChat} from 'stream-chat';
+import { StreamChat } from 'stream-chat';
+import { StreamClient } from '@stream-io/node-sdk';
 
 const apiKey = ENV.STREAM_ACCESS_KEY;
 const apiSecret = ENV.STREAM_SECRET_KEY;
@@ -9,6 +10,7 @@ if (!apiKey || !apiSecret) {
 }
 
 export const streamChatClient = StreamChat.getInstance(apiKey, apiSecret);
+export const streamVideoClient = new StreamClient(apiKey, apiSecret);
 
 export const upsertStreamUser = async (userData) => {
     try {
@@ -29,5 +31,5 @@ export const deleteStreamUser = async (userId) => {
     }
 };
 
-// todo: add token generation method
+
 
