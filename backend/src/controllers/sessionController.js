@@ -102,6 +102,18 @@ export async function joinSession(req, res) {
             return res.status(404).json({ message: "Session not found." });
         }
 
+        if (session.status !== "Active") {
+            return res.status(400).json({ message: "Cannot join a completed session." });
+        }
+
+        if (session.participants.includes(userId)) {
+            return res.status(400).json({ message: "You have already joined this session." });
+        }
+
+        if (session.host.toString() === userId.toString()) {
+            return res.status(400).json({ message: "Host cannot join their own session as participant." });
+        }
+
         // Check if session is full (for now max 1 participant)
         if (session.participants.length >= 1) {
             return res.status(400).json({ message: "Session is full." });
@@ -111,7 +123,7 @@ export async function joinSession(req, res) {
         await session.save();
 
         // Add user to Stream chat channel
-        const channel = streamChatClient.channel("messaging", sessionId);
+        const channel = streamChatClient.channel("messaging", session.callId);
         await channel.addMembers([clerkId]);
 
         res.status(200).json({ message: "Joined session successfully.", session });
@@ -139,9 +151,6 @@ export async function endSession(req, res) {
             return res.status(400).json({ message: "Session is already completed." });
         }
 
-        session.status = "Completed";
-        await session.save();
-
         // Remove Stream video call
         const call = streamVideoClient.video.call("default", session.callId);
         await call.delete({ hard: true }); // permanently delete the call
@@ -150,6 +159,8 @@ export async function endSession(req, res) {
         const channel = streamChatClient.channel("messaging", session.callId);
         await channel.delete({ hard: true });
 
+        session.status = "Completed";
+        await session.save();
 
         res.status(200).json({ message: "Session ended successfully.", session });
     } catch (error) {
