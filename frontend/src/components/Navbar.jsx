@@ -42,7 +42,9 @@ function Navbar() {
           </SignInButton>
         </SignedOut>
         <SignedIn>
-          <UserButton mode="modal" afterSignOutUrl="/" />
+            <div className="ml-4">
+                <UserButton mode="modal" afterSignOutUrl="/" />
+            </div>
         </SignedIn>
       </div>
     </nav>
