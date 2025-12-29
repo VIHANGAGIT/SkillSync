@@ -1,22 +1,21 @@
-import './App.css'
-import { SignInButton, SignedOut, SignedIn, UserButton } from '@clerk/clerk-react'
+import { SignInButton, SignedOut, SignedIn, UserButton, useUser } from '@clerk/clerk-react'
+import { Navigate, Route, Routes } from 'react-router'
+import HomePage from './pages/HomePage'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 
+  const {isSignedIn} = useUser()
+
   return (
     <>
-    
-      <h1>Homepage of SkillSync</h1>
+      <Routes>
 
-      <header>
-        <SignedOut>
-          <SignInButton mode='modal'> Sign In</SignInButton>
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </header>
+        <Route path="/" element={<HomePage />}/> 
+        <Route path="/challenges" element={isSignedIn ? <ChallengesPage /> : <Navigate to="/" />}/>
 
+      </Routes>
+      <Toaster toastOptions={{ duration: 3000 }} />
     </>
   )
 }
