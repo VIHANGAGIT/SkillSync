@@ -1,17 +1,23 @@
 import { SignInButton, SignedOut, SignedIn, UserButton, useUser } from '@clerk/clerk-react'
 import { Navigate, Route, Routes } from 'react-router'
 import HomePage from './pages/HomePage'
+import DashboardPage from './pages/DashboardPage'
+import ChallengesPage from './pages/ChallengesPage'
 import { Toaster } from 'react-hot-toast'
 
 function App() {
 
-  const {isSignedIn} = useUser()
+  const {isSignedIn, isLoaded} = useUser()
+
+  if (!isLoaded) return null;
 
   return (
     <>
       <Routes>
 
-        <Route path="/" element={<HomePage />}/> 
+        <Route path="/" element={!isSignedIn ? <HomePage /> : <Navigate to="/dashboard" />}/> 
+        <Route path="/dashboard" element={isSignedIn ? <DashboardPage /> : <Navigate to="/" />}/> 
+
         <Route path="/challenges" element={isSignedIn ? <ChallengesPage /> : <Navigate to="/" />}/>
 
       </Routes>
