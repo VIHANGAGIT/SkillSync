@@ -55,7 +55,7 @@ function HomePage() {
 
         {/* Hero Section */}
         <div className="hero min-h-[calc(100vh-4rem)] bg-base-200 relative overflow-hidden">
-            <div className="absolute inset-0 bg-grid-slate-900/[0.04] bg-[bottom_1px_center] dark:bg-grid-slate-400/[0.05] [mask-image:linear-gradient(0deg,transparent,black)]"></div>
+            <div className="absolute inset-0 bg-grid-slate-900/[0.04] bg-position-[bottom_1px_center] dark:bg-grid-slate-400/[0.05] [mask-image:linear-gradient(0deg,transparent,black)]"></div>
             <div className="hero-content flex-col lg:flex-row-reverse gap-12 z-10 max-w-7xl w-full px-4">
             
             {/* Hero Image*/}
