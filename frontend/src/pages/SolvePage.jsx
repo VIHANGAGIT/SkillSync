@@ -76,27 +76,31 @@ function SolvePage() {
     }
 
     const handleCodeExecution = async () => {
-        setIsRunning(true);
-        setOutput("Running tests...");
-        
-        setIsRunning(false);
-        const result = await executeCode(code, selectedLanguage);
-        setOutput(result);
-        setIsRunning(false);
+        try{
+            setIsRunning(true);
+            setOutput("Running tests...");
             
-        if (result.success) {
-            const expectedOutput = currentChallenge.expectedOutput[selectedLanguage];
-            const isSuccess = checkTestCases(result.output, expectedOutput);
+            const result = await executeCode(code, selectedLanguage);
+            setOutput(result);
+            setIsRunning(false);
+                
+            if (result.success) {
+                const expectedOutput = currentChallenge.expectedOutput[selectedLanguage];
+                const isSuccess = checkTestCases(result.output, expectedOutput);
 
-            if (isSuccess) {
-                triggerConfetti();
-                toast.success("All Test Cases Passed! Challenge Solved!");
+                if (isSuccess) {
+                    triggerConfetti();
+                    toast.success("All Test Cases Passed! Challenge Solved!");
+                } else {
+                    toast.error("Some Test Cases Failed. Try Again!");
+                }
             } else {
-                toast.error("Some Test Cases Failed. Try Again!");
+                toast.error("Error during code execution. See output for details.");
             }
-        } else {
-            toast.error("Error during code execution. See output for details.");
+        } finally {
+            setIsRunning(false);
         }
+        
     }
 
     if (!currentChallenge) return <div className="min-h-screen flex items-center justify-center bg-base-200"><span className="loading loading-spinner loading-lg"></span></div>;
