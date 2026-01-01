@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const sessionSchema = new mongoose.Schema({
-    problemName: {
+    challengeId: { // Name of challenge is the ID
         type: String,
         required: true
     },
@@ -18,14 +18,14 @@ const sessionSchema = new mongoose.Schema({
     participants: [{ // Might change to single participant later
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        default: null
+        default: []
     }],
     status: {
         type: String,
         enum: ["Active", "Completed"],
         default: "Active"
     },
-    callId: { // Stream call ID
+    sessionId: { // Stream call ID
         type: String,
         default:""
     }
