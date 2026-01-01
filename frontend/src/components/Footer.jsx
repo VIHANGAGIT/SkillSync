@@ -9,7 +9,7 @@ function Footer() {
         <a className="link link-hover">Contact</a>
       </nav>
       <aside>
-        <p>Copyright © {new Date().getFullYear()} - All rights reserved by DEAMONX</p>
+        <p>{new Date().getFullYear()} &nbsp; | &nbsp; All rights reserved by Vihanga Vithanawasam</p>
       </aside>
     </footer>
   );
