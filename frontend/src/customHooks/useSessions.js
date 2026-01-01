@@ -1,0 +1,79 @@
+import {useQuery, useMutation} from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { sessionAPI } from '../api/sessions';
+
+
+export const useActiveSessions = () => {
+    const response = useQuery({
+        queryKey: ["activeSessions"],
+        queryFn: sessionAPI.getActiveSessions,
+    });
+
+    return response;
+}
+
+export const useCreateSession = () => {
+    const response = useMutation({
+        mutationKey: ["createSession"],
+        mutationFn: sessionAPI.createSession,
+        onSuccess: () => {
+            toast.success("Session created successfully!");
+        },
+        onError: (error) => {
+            toast.error("Failed to create session: " + error.message);
+            console.error("Create Session Error:", error);
+        }
+    });
+
+    return response;
+}
+
+export const usePastSessions = () => {
+    const response = useQuery({
+        queryKey: ["pastSessions"],
+        queryFn: sessionAPI.getPastSessions,
+    });
+
+    return response;
+}
+
+export const useSessionById = (sessionId) => {
+    const response = useQuery({
+        queryKey: ["session", sessionId],
+        queryFn: () => sessionAPI.getSessionById(sessionId),
+        enabled: !!sessionId, // only run if sessionId is available
+        refetchInterval: 5000, // refetch every 5 seconds
+    });
+
+    return response;
+}
+
+export const useJoinSession = (sessionId) => {
+    const response = useMutation({
+        mutationKey: ["joinSession"],
+        mutationFn: () => sessionAPI.joinSession(sessionId),
+        onSuccess: () => {
+            toast.success("Joined session successfully!");
+        },
+        onError: (error) => {
+            toast.error("Failed to join session: " + error.message);
+        }
+    });
+
+    return response;
+}
+
+export const useEndSession = (sessionId) => {
+    const response = useMutation({
+        mutationKey: ["endSession"],
+        mutationFn: () => sessionAPI.endSession(sessionId),
+        onSuccess: () => {
+            toast.success("Session ended successfully!");
+        },
+        onError: (error) => {
+            toast.error("Failed to end session: " + error.message);
+        }
+    });
+
+    return response;
+}
