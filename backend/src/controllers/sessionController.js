@@ -3,30 +3,30 @@ import { streamChatClient, streamVideoClient } from "../lib/stream.js";
 
 export async function createSession(req, res) {
     try {
-        const { problemName, difficulty } = req.body;
+        const { challengeId, difficulty } = req.body;
         const hostId = req.user._id; // MongoDB User ID
         const clerkId = req.user.clerkId;
 
-        if (!problemName || !difficulty) {
-            return res.status(400).json({ message: "Problem name and difficulty are required." });
+        if (!challengeId || !difficulty) {
+            return res.status(400).json({ message: "Challenge ID and difficulty are required." });
         }
 
         // Create unique Stream call ID
         const sessionId = `session_${Date.now()}_${Math.random().toString(36).substring(7)}`;
 
         // Save session to database
-        const session = await Session.create({problemName, difficulty, host: hostId, sessionId});
+        const session = await Session.create({challengeId, difficulty, host: hostId, sessionId});
 
         // Get / Create Stream video call
         await streamVideoClient.video.call("default", sessionId).getOrCreate({
             data: {
                 created_by_id: clerkId,
-                custom: { problemName, difficulty, sessionId: session._id.toString()}
+                custom: { challengeId, difficulty, sessionId: session._id.toString()}
             }
         });
 
         const channel = streamChatClient.channel("messaging", sessionId, {
-            name: `Session Chat - ${problemName}`,
+            name: `Session Chat - ${challengeId}`,
             created_by_id: clerkId,
             members: [clerkId],
         });
@@ -42,8 +42,9 @@ export async function createSession(req, res) {
 
 export async function getActiveSessions(_, res) {
     try {
-        const activeSessions = await Session.find({status: "active"})
+        const activeSessions = await Session.find({status: "Active"})
         .populate("host", "name profilePicture email clerkId") // Populate host details from mongoDB since host only has user ID
+        .populate("participants", "name profilePicture email clerkId")
         .sort({createdAt:-1})
         .limit(10); 
         
