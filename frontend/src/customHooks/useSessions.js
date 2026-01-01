@@ -48,10 +48,10 @@ export const useSessionById = (sessionId) => {
     return response;
 }
 
-export const useJoinSession = (sessionId) => {
+export const useJoinSession = () => {
     const response = useMutation({
         mutationKey: ["joinSession"],
-        mutationFn: () => sessionAPI.joinSession(sessionId),
+        mutationFn: sessionAPI.joinSession,
         onSuccess: () => {
             toast.success("Joined session successfully!");
         },
@@ -63,10 +63,10 @@ export const useJoinSession = (sessionId) => {
     return response;
 }
 
-export const useEndSession = (sessionId) => {
+export const useEndSession = () => {
     const response = useMutation({
         mutationKey: ["endSession"],
-        mutationFn: () => sessionAPI.endSession(sessionId),
+        mutationFn: sessionAPI.endSession,
         onSuccess: () => {
             toast.success("Session ended successfully!");
         },
