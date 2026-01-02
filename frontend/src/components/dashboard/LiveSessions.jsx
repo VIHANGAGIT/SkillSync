@@ -1,8 +1,9 @@
-import { Link } from 'react-router';
-import { Activity, ArrowRight, Crown, Play, User } from 'lucide-react';
+import { useNavigate } from 'react-router';
+import { Activity, Crown, Play, User } from 'lucide-react';
 import { getDifficultyColor } from '../../lib/utils';
 
 function LiveSessions({ activeSessions, isActiveSessionsLoading, isUserInSession, onSessionCreate }) {
+    const navigate = useNavigate();
     return (
         <div className="bg-base-200 rounded-xl border border-base-300 p-6 h-full flex flex-col">
             <div className="flex justify-between items-center mb-4">
@@ -12,13 +13,13 @@ function LiveSessions({ activeSessions, isActiveSessionsLoading, isUserInSession
                 </h2>
                 <div className="flex items-center gap-2">
                     <div className="size-2 bg-primary rounded-full" />
-                    <span className="text-sm font-medium text-success">{activeSessions.length} sessions</span>
+                    <span className="text-sm font-medium text-success">{activeSessions.length} Sessions</span>
                 </div>
             </div>
 
             <div className="flex-1 overflow-y-auto custom-scrollbar space-y-3 pr-2">
                 {isActiveSessionsLoading ? (
-                    <div className="text-center py-8">
+                    <div className="text-center items-center flex h-full justify-center">
                         <span className="loading loading-spinner loading-lg text-primary"></span>
                     </div>
                 ) : activeSessions.length === 0 ? (
@@ -52,10 +53,9 @@ function LiveSessions({ activeSessions, isActiveSessionsLoading, isUserInSession
                                             <User className="w-4 h-4 mr-1 opacity-70" />
                                             <span className="mx-1 text-xs">{session.participants.length + 1}/2</span>
                                         </div>
-                                        
-                                        {/* Add time elapsed */}
+                                        {/* TODO: Add time elapsed */}
                                     </div>
-                                    {session.participants && !isUserInSession(session) ? (
+                                    {session.participants.length >= 1 && !isUserInSession(session) ? (
                                         <div className="badge badge-error badge-sm">Full</div>
                                     ) : (
                                         <button onClick={() => navigate(`/session/${session._id}`)} className="btn btn-primary btn-xs">

@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import { useUser } from '@clerk/clerk-react';
+import { useState } from 'react';
 import { Link } from 'react-router';
-import { 
-  Menu, Terminal, Search, Filter, Play, CheckCircle2, Clock, Zap, Brain, Code2 
-} from 'lucide-react';
+import { Search, Play, Clock, Zap } from 'lucide-react';
 import { challenges } from '../data/challenges.js';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer.jsx';
@@ -88,10 +85,7 @@ function ChallengesPage() {
                   {challenge.description.text}
                 </p>
                 
-                <div className="card-actions justify-between items-center mt-auto pt-4 border-t border-base-content/10">
-                  <div className="flex items-center text-sm font-bold text-warning">
-                    <Zap className="w-4 h-4 mr-1 fill-current" /> 100 XP
-                  </div>
+                <div className="card-actions justify-end items-center mt-auto pt-4 border-t border-base-content/10">
                   <Link to={`/challenge/${challenge.id}`} className="btn btn-primary btn-sm">
                     Solve <Play className="w-3 h-3 ml-1" />
                   </Link>

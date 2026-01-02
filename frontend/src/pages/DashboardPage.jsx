@@ -59,9 +59,6 @@ function DashboardPage() {
     const activeSessionsList = activeSessionsData?.activeSessions || [];
     const pastSessionsList = pastSessionsData?.pastSessions || [];
 
-    console.log("Active Sessions:", activeSessionsList);
-    console.log("Past Sessions:", pastSessionsList);
-
     return (
       <>
         <div className="min-h-screen bg-base-100 flex flex-col font-sans">
@@ -71,7 +68,7 @@ function DashboardPage() {
 
                 <Welcome onCreateSession={() => setShowModal(true)} />
 
-                <div className="grid grid-cols-1 lg:grid-cols-[35%_64%] gap-4 mb-8 h-100" >
+                <div className="grid grid-cols-1 lg:grid-cols-[35%_64%] gap-4 mb-8" >
 
                   <StatsGrid 
                     activeSessionsCount={activeSessionsList.length} 

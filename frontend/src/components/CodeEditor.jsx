@@ -7,13 +7,13 @@ function CodeEditor({ selectedLanguage, handleLanguageChange, code, setCode, isR
         <div className="flex flex-col h-full">
             <div className="p-2 border-b border-base-300 bg-base-200/50 flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                    <Code2 className="w-4 h-4 text-primary" />
-                    <span className="font-bold text-sm">Code Editor</span>
+                    <Code2 className="w-5 h-5 text-primary" />
+                    <span className="font-bold text-base">Code Editor</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <img src={language_config[selectedLanguage].icon} alt={selectedLanguage} className="w-6 h-6 object-contain" />
                     <select
-                        className="select select-bordered select-xs capitalize"
+                        className="select select-bordered select-sm capitalize"
                         value={selectedLanguage}
                         onChange={handleLanguageChange}
                     >
@@ -22,7 +22,7 @@ function CodeEditor({ selectedLanguage, handleLanguageChange, code, setCode, isR
                         ))}
                     </select>
                     <button
-                        className={`btn btn-xs btn-primary`}
+                        className={`btn btn-sm btn-primary`}
                         onClick={handleCodeExecution}
                         disabled={isRunning}
                     >

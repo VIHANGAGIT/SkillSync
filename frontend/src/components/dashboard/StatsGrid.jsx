@@ -9,7 +9,7 @@ function StatsGrid({ activeSessionsCount, pastSessionsCount }) {
     const successRate = totalSessions > 0 ? Math.round((solvedChallenges / totalSessions) * 100) : 0;
 
     return (
-        <div className="grid grid-cols-2 gap-4 h-full justify-around">
+        <div className="grid grid-cols-2 gap-4 justify-around">
             <div className="stats shadow bg-base-200 border border-base-300 mt-auto">
                 <div className="stat" >
                     <div className="stat-figure text-primary">

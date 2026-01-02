@@ -20,14 +20,18 @@ function ChallengeDetails({ currentChallenge, currentChallengeId, handleChalleng
                         ))}
                     </select>
                 </div>
-                <div className={`badge ${getDifficultyColor(currentChallenge.difficulty)} badge-outline`}>
-                    {currentChallenge.difficulty}
-                </div>
+                
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
-                <h1 className="text-2xl font-bold mb-2">{currentChallenge.title}</h1>
-                <div className="text-sm text-base-content/60 mb-6">{currentChallenge.category}</div>
+                <p className="text-2xl font-bold mb-2 mx">
+                    {currentChallenge.title}
+                    <div className={`badge ${getDifficultyColor(currentChallenge.difficulty)} badge-outline ml-2`}>
+                        {currentChallenge.difficulty}
+                    </div>
+                    
+                </p> 
+                <div className="font-bold mb-2 text-primary">{currentChallenge.category}</div>
 
                 <div className="prose prose-sm max-w-none">
                     <p className="text-base-content/80 text-base leading-relaxed mb-6">
