@@ -1,10 +1,11 @@
-import { SignInButton, SignedOut, SignedIn, UserButton, useUser } from '@clerk/clerk-react'
+import { useUser } from '@clerk/clerk-react'
 import { Navigate, Route, Routes } from 'react-router'
 import HomePage from './pages/HomePage'
 import DashboardPage from './pages/DashboardPage'
 import ChallengesPage from './pages/ChallengesPage'
 import { Toaster } from 'react-hot-toast'
 import SolvePage from './pages/SolvePage'
+import SessionPage from './pages/SessionPage'
 
 function App() {
 
@@ -20,7 +21,9 @@ function App() {
         <Route path="/dashboard" element={isSignedIn ? <DashboardPage /> : <Navigate to="/" />}/> 
 
         <Route path="/challenges" element={isSignedIn ? <ChallengesPage /> : <Navigate to="/" />}/>
-        <Route path="/challenge/:id" element={isSignedIn ? <SolvePage /> : <Navigate to="/" />}/>
+        <Route path="/challenge/:sessionId" element={isSignedIn ? <SolvePage /> : <Navigate to="/" />}/>
+
+        <Route path="/session/:sessionId" element={isSignedIn ? <SessionPage /> : <Navigate to="/" />}/>
 
       </Routes>
       <Toaster toastOptions={{ duration: 3000 }} />
