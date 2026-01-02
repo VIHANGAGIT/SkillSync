@@ -12,20 +12,20 @@ export async function createSession(req, res) {
         }
 
         // Create unique Stream call ID
-        const sessionId = `session_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+        const streamCallId = `session_${Date.now()}_${Math.random().toString(36).substring(7)}`;
 
         // Save session to database
-        const session = await Session.create({challengeId, difficulty, host: hostId, sessionId});
+        const session = await Session.create({challengeId, difficulty, host: hostId, streamCallId});
 
         // Get / Create Stream video call
-        await streamVideoClient.video.call("default", sessionId).getOrCreate({
+        await streamVideoClient.video.call("default", streamCallId).getOrCreate({
             data: {
                 created_by_id: clerkId,
-                custom: { challengeId, difficulty, sessionId: session._id.toString()}
+                custom: { challengeId, difficulty, streamCallId: session._id.toString()}
             }
         });
 
-        const channel = streamChatClient.channel("messaging", sessionId, {
+        const channel = streamChatClient.channel("messaging", streamCallId, {
             name: `Session Chat - ${challengeId}`,
             created_by_id: clerkId,
             members: [clerkId],
@@ -136,8 +136,10 @@ export async function joinSession(req, res) {
 
 export async function endSession(req, res) {
     try {
+        console.log(req);
         const {sessionId} = req.params;
         const userId = req.user._id;
+        console
         const session = await Session.findById(sessionId);
         if (!session) {
             return res.status(404).json({ message: "Session not found." });
@@ -153,11 +155,11 @@ export async function endSession(req, res) {
         }
 
         // Remove Stream video call
-        const call = streamVideoClient.video.call("default", session.callId);
+        const call = streamVideoClient.video.call("default", session.streamCallId);
         await call.delete({ hard: true }); // permanently delete the call
 
         // Remove Stream chat channel
-        const channel = streamChatClient.channel("messaging", session.callId);
+        const channel = streamChatClient.channel("messaging", session.streamCallId);
         await channel.delete({ hard: true });
 
         session.status = "Completed";
