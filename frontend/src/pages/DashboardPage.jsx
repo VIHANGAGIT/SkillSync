@@ -50,7 +50,7 @@ function DashboardPage() {
     }
 
     const isUserInSession = (session) => {
-      return session.participants?.clerkId === user.id || session.host?.clerkId === user.id;
+      return session.participants?.some(p => p.clerkId === user.id) || session.host?.clerkId === user.id;
     }
 
     const {data: activeSessionsData, isLoading: isActiveSessionsLoading} = useActiveSessions();
@@ -83,7 +83,7 @@ function DashboardPage() {
                   />
 
                 </div>
-                <div className="mb-8">
+                <div className="mb-2">
 
                     <PastSessions pastSessions={pastSessionsList} isPastSessionsLoading={isPastSessionsLoading} />
 

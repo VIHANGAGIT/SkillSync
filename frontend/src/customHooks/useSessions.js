@@ -17,10 +17,11 @@ export const useCreateSession = () => {
         mutationKey: ["createSession"],
         mutationFn: sessionAPI.createSession,
         onSuccess: () => {
-            toast.success("Session created successfully!");
+            console.log("Create Session Success");
+            toast.success("Session created successfully!", { duration: 3000 });
         },
         onError: (error) => {
-            toast.error("Failed to create session: " + error.message);
+            toast.error("Failed to create session: " + error.message, { duration: 3000 });
             console.error("Create Session Error:", error);
         }
     });
@@ -68,7 +69,7 @@ export const useEndSession = () => {
         mutationKey: ["endSession"],
         mutationFn: sessionAPI.endSession,
         onSuccess: () => {
-            toast.success("Session ended successfully!");
+            toast.success("Session ended successfully!", { duration: 3000 });
         },
         onError: (error) => {
             toast.error("Failed to end session: " + error.message);

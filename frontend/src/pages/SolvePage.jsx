@@ -11,10 +11,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import { executeCode } from '../lib/piston';
 
 function SolvePage() {
-    const { id } = useParams();
+    const { sessionId } = useParams();
     const navigate = useNavigate();
 
-    const [currentChallengeId, setCurrentChallengeId] = useState(id || "two-sum");
+    const [currentChallengeId, setCurrentChallengeId] = useState(sessionId || "two-sum");
     const [selectedLanguage, setSelectedLanguage] = useState("javascript");
     const [code, setCode] = useState("");
     const [output, setOutput] = useState("");
@@ -23,14 +23,14 @@ function SolvePage() {
     const currentChallenge = challenges[currentChallengeId];
 
     useEffect(() => {
-        if (id && challenges[id]) {
-            setCurrentChallengeId(id);
-            setCode(challenges[id].starterCode[selectedLanguage]);
+        if (sessionId && challenges[sessionId]) {
+            setCurrentChallengeId(sessionId);
+            setCode(challenges[sessionId].starterCode[selectedLanguage]);
             setOutput("");
-        } else if (!id) {
+        } else if (!sessionId) {
              navigate('/challenge/two-sum', { replace: true });
         }
-    }, [id, selectedLanguage, navigate]);
+    }, [sessionId, selectedLanguage, navigate]);
 
     const handleLanguageChange = (e) => {
         setSelectedLanguage(e.target.value);

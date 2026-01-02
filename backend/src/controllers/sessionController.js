@@ -107,10 +107,6 @@ export async function joinSession(req, res) {
             return res.status(400).json({ message: "Cannot join a completed session." });
         }
 
-        if (session.participants.includes(userId)) {
-            return res.status(400).json({ message: "You have already joined this session." });
-        }
-
         if (session.host.toString() === userId.toString()) {
             return res.status(400).json({ message: "Host cannot join their own session as participant." });
         }
@@ -124,7 +120,7 @@ export async function joinSession(req, res) {
         await session.save();
 
         // Add user to Stream chat channel
-        const channel = streamChatClient.channel("messaging", session.callId);
+        const channel = streamChatClient.channel("messaging", session.streamCallId);
         await channel.addMembers([clerkId]);
 
         res.status(200).json({ message: "Joined session successfully.", session });
