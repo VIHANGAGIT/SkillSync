@@ -100,48 +100,132 @@ class Solution {
       "-5000 ≤ Node.val ≤ 5000",
     ],
     starterCode: {
-      javascript: `/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
+      javascript: `
+ // Definition for singly-linked list.
+ function ListNode(val, next) {
+    this.val = (val===undefined ? 0 : val)
+    this.next = (next===undefined ? null : next)
+ }
+ 
 /**
  * @param {ListNode} head
  * @return {ListNode}
  */
 var reverseList = function(head) {
-    
-};`,
+    // Write your solution here
+};
+
+// Helper function to create a linked list from an array
+function createLinkedList(arr) {
+    if (!arr.length) return null;
+    let head = new ListNode(arr[0]);
+    let current = head;
+    for (let i = 1; i < arr.length; i++) {
+        current.next = new ListNode(arr[i]);
+        current = current.next;
+    }
+    return head;
+}
+
+// Helper function to convert linked list to array for printing
+function linkedListToArray(head) {
+    let arr = [];
+    while (head) {
+        arr.push(head.val);
+        head = head.next;
+    }
+    return arr;
+}
+
+// Test cases
+console.log(linkedListToArray(reverseList(createLinkedList([1, 2, 3, 4, 5])))); // Expected: [5, 4, 3, 2, 1]
+console.log(linkedListToArray(reverseList(createLinkedList([1, 2])))); // Expected: [2, 1]
+console.log(linkedListToArray(reverseList(createLinkedList([])))); // Expected: []`,
       python: `# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
+class ListNode:
+  def __init__(self, val=0, next=None):
+    self.val = val
+    self.next = next
+    
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        `,
-      java: `/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+      # Write your solution here
+      pass
+
+# Helper function to create a linked list from a list
+def create_linked_list(arr):
+    if not arr:
+        return None
+    head = ListNode(arr[0])
+    current = head
+    for val in arr[1:]:
+        current.next = ListNode(val)
+        current = current.next
+    return head
+
+# Helper function to convert linked list to list for printing
+def linked_list_to_list(head):
+    arr = []
+    while head:
+        arr.append(head.val)
+        head = head.next
+    return arr
+
+# Test cases
+sol = Solution()
+print(linked_list_to_list(sol.reverseList(create_linked_list([1, 2, 3, 4, 5])))) # Expected: [5, 4, 3, 2, 1]
+print(linked_list_to_list(sol.reverseList(create_linked_list([1, 2])))) # Expected: [2, 1]
+print(linked_list_to_list(sol.reverseList(create_linked_list([])))) # Expected: []`,
+      java: `import java.util.*;
+
+//Definition for singly-linked list.
+public class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ }
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-        
+        // Write your solution here
+    }
+
+    // Helper function to create a linked list from an array
+    public static ListNode createLinkedList(int[] arr) {
+        if (arr.length == 0) return null;
+        ListNode head = new ListNode(arr[0]);
+        ListNode current = head;
+        for (int i = 1; i < arr.length; i++) {
+            current.next = new ListNode(arr[i]);
+            current = current.next;
+        }
+        return head;
+    }
+
+    // Helper function to print linked list
+    public static void printLinkedList(ListNode head) {
+        List<Integer> result = new ArrayList<>();
+        while (head != null) {
+            result.add(head.val);
+            head = head.next;
+        }
+        System.out.println(result);
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        printLinkedList(sol.reverseList(createLinkedList(new int[]{1, 2, 3, 4, 5}))); // Expected: [5, 4, 3, 2, 1]
+        printLinkedList(sol.reverseList(createLinkedList(new int[]{1, 2}))); // Expected: [2, 1]
+        printLinkedList(sol.reverseList(createLinkedList(new int[]{}))); // Expected: []
     }
 }`,
     },
     expectedOutput: {
-      javascript: "",
-      python: "",
-      java: "",
+      javascript: "[5, 4, 3, 2, 1]\n[2, 1]\n[]",
+      python: "[5, 4, 3, 2, 1]\n[2, 1]\n[]",
+      java: "[5, 4, 3, 2, 1]\n[2, 1]\n[]",
     },
   },
   "valid-parentheses": {
@@ -182,20 +266,38 @@ class Solution {
  */
 var isValid = function(s) {
     
-};`,
+};
+
+// Test cases
+console.log(isValid("()")); // Expected: true
+console.log(isValid("()[]{}")); // Expected: true
+console.log(isValid("(]")); // Expected: false`,
       python: `class Solution:
     def isValid(self, s: str) -> bool:
-        `,
+        pass
+
+# Test cases
+sol = Solution()
+print(sol.isValid("()")) # Expected: True
+print(sol.isValid("()[]{}")) # Expected: True
+print(sol.isValid("(]")) # Expected: False`,
       java: `class Solution {
     public boolean isValid(String s) {
         
     }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.isValid("()")); // Expected: true
+        System.out.println(sol.isValid("()[]{}")); // Expected: true
+        System.out.println(sol.isValid("(]")); // Expected: false
+    }
 }`,
     },
     expectedOutput: {
-      javascript: "",
-      python: "",
-      java: "",
+      javascript: "true\ntrue\nfalse",
+      python: "True\nTrue\nFalse",
+      java: "true\ntrue\nfalse",
     },
   },
   "merge-intervals": {
@@ -231,20 +333,37 @@ var isValid = function(s) {
  */
 var merge = function(intervals) {
     
-};`,
+};
+
+// Test cases
+console.log(JSON.stringify(merge([[1,3],[2,6],[8,10],[15,18]]))); // Expected: [[1,6],[8,10],[15,18]]
+console.log(JSON.stringify(merge([[1,4],[4,5]]))); // Expected: [[1,5]]`,
       python: `class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        `,
-      java: `class Solution {
+        pass
+
+# Test cases
+sol = Solution()
+print(sol.merge([[1,3],[2,6],[8,10],[15,18]])) # Expected: [[1,6],[8,10],[15,18]]
+print(sol.merge([[1,4],[4,5]])) # Expected: [[1,5]]`,
+      java: `import java.util.Arrays;
+
+class Solution {
     public int[][] merge(int[][] intervals) {
         
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(Arrays.deepToString(sol.merge(new int[][]{{1,3},{2,6},{8,10},{15,18}}))); // Expected: [[1,6],[8,10],[15,18]]
+        System.out.println(Arrays.deepToString(sol.merge(new int[][]{{1,4},{4,5}}))); // Expected: [[1,5]]
     }
 }`,
     },
     expectedOutput: {
-      javascript: "",
-      python: "",
-      java: "",
+      javascript: "[[1,6],[8,10],[15,18]]\n[[1,5]]",
+      python: "[[1, 6], [8, 10], [15, 18]]\n[[1, 5]]",
+      java: "[[1, 6], [8, 10], [15, 18]]\n[[1, 5]]",
     },
   },
   "trapping-rain-water": {
@@ -279,123 +398,192 @@ var merge = function(intervals) {
  */
 var trap = function(height) {
     
-};`,
+};
+
+// Test cases
+console.log(trap([0,1,0,2,1,0,1,3,2,1,2,1])); // Expected: 6
+console.log(trap([4,2,0,3,2,5])); // Expected: 9`,
       python: `class Solution:
     def trap(self, height: List[int]) -> int:
-        `,
+        pass
+
+# Test cases
+sol = Solution()
+print(sol.trap([0,1,0,2,1,0,1,3,2,1,2,1])) # Expected: 6
+print(sol.trap([4,2,0,3,2,5])) # Expected: 9`,
       java: `class Solution {
     public int trap(int[] height) {
         
     }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.trap(new int[]{0,1,0,2,1,0,1,3,2,1,2,1})); // Expected: 6
+        System.out.println(sol.trap(new int[]{4,2,0,3,2,5})); // Expected: 9
+    }
 }`,
     },
     expectedOutput: {
-      javascript: "",
-      python: "",
-      java: "",
+      javascript: "6\n9",
+      python: "6\n9",
+      java: "6\n9",
     },
   },
-  "lru-cache": {
-    id: "lru-cache",
-    title: "LRU Cache",
-    difficulty: "Medium",
-    category: "Design",
+  "merge-two-sorted-lists": {
+    id: "merge-two-sorted-lists",
+    title: "Merge Two Sorted Lists",
+    difficulty: "Easy",
+    category: "Linked List",
     description: {
-      text: "Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.",
-      notes: [
-        "Implement the LRUCache class:",
-        "LRUCache(int capacity) Initialize the LRU cache with positive size capacity.",
-        "int get(int key) Return the value of the key if the key exists, otherwise return -1.",
-        "void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.",
-        "The functions get and put must each run in O(1) average time complexity.",
-      ],
+      text: "You are given the heads of two sorted linked lists list1 and list2. Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists. Return the head of the merged linked list.",
+      notes: [],
     },
     examples: [
       {
-        input: "[\"LRUCache\", \"put\", \"put\", \"get\", \"put\", \"get\", \"put\", \"get\"]\n[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1]]",
-        output: "[null, null, null, 1, null, -1, null, -1]",
-        explanation: "LRUCache lRUCache = new LRUCache(2);\nlRUCache.put(1, 1); // cache is {1=1}\nlRUCache.put(2, 2); // cache is {1=1, 2=2}\nlRUCache.get(1);    // return 1\nlRUCache.put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}\nlRUCache.get(2);    // returns -1 (not found)\nlRUCache.put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}\nlRUCache.get(1);    // return -1 (not found)",
+        input: "list1 = [1,2,4], list2 = [1,3,4]",
+        output: "[1,1,2,3,4,4]",
+      },
+      {
+        input: "list1 = [], list2 = []",
+        output: "[]",
+      },
+      {
+        input: "list1 = [], list2 = [0]",
+        output: "[0]",
       },
     ],
     constraints: [
-      "1 ≤ capacity ≤ 3000",
-      "0 ≤ key ≤ 10⁴",
-      "0 ≤ value ≤ 10⁵",
-      "At most 2 * 10⁵ calls will be made to get and put.",
+      "The number of nodes in both lists is in the range [0, 50]",
+      "-100 ≤ Node.val ≤ 100",
+      "Both list1 and list2 are sorted in non-decreasing order",
     ],
     starterCode: {
       javascript: `/**
- * @param {number} capacity
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
  */
-var LRUCache = function(capacity) {
+/**
+ * @param {ListNode} list1
+ * @param {ListNode} list2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function(list1, list2) {
     
 };
 
-/** 
- * @param {number} key
- * @return {number}
- */
-LRUCache.prototype.get = function(key) {
-    
-};
-
-/** 
- * @param {number} key 
- * @param {number} value
- * @return {void}
- */
-LRUCache.prototype.put = function(key, value) {
-    
-};
-
-/** 
- * Your LRUCache object will be instantiated and called as such:
- * var obj = new LRUCache(capacity)
- * var param_1 = obj.get(key)
- * obj.put(key,value)
- */`,
-      python: `class LRUCache:
-
-    def __init__(self, capacity: int):
-        
-
-    def get(self, key: int) -> int:
-        
-
-    def put(self, key: int, value: int) -> None:
-        
-
-
-# Your LRUCache object will be instantiated and called as such:
-# obj = LRUCache(capacity)
-# param_1 = obj.get(key)
-# obj.put(key,value)`,
-      java: `class LRUCache {
-
-    public LRUCache(int capacity) {
-        
+// Helper function to create a linked list from an array
+function createLinkedList(arr) {
+    if (!arr.length) return null;
+    let head = new ListNode(arr[0]);
+    let current = head;
+    for (let i = 1; i < arr.length; i++) {
+        current.next = new ListNode(arr[i]);
+        current = current.next;
     }
-    
-    public int get(int key) {
-        
-    }
-    
-    public void put(int key, int value) {
-        
-    }
+    return head;
 }
 
+// Helper function to convert linked list to array for printing
+function linkedListToArray(head) {
+    let arr = [];
+    while (head) {
+        arr.push(head.val);
+        head = head.next;
+    }
+    return arr;
+}
+
+// Test cases
+console.log(linkedListToArray(mergeTwoLists(createLinkedList([1,2,4]), createLinkedList([1,3,4])))); // Expected: [1,1,2,3,4,4]
+console.log(linkedListToArray(mergeTwoLists(createLinkedList([]), createLinkedList([])))); // Expected: []
+console.log(linkedListToArray(mergeTwoLists(createLinkedList([]), createLinkedList([0])))); // Expected: [0]`,
+      python: `# Definition for singly-linked list.
+# class ListNode:
+     def __init__(self, val=0, next=None):
+         self.val = val
+         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        pass
+
+# Helper function to create a linked list from a list
+def create_linked_list(arr):
+    if not arr:
+        return None
+    head = ListNode(arr[0])
+    current = head
+    for val in arr[1:]:
+        current.next = ListNode(val)
+        current = current.next
+    return head
+
+# Helper function to convert linked list to list for printing
+def linked_list_to_list(head):
+    arr = []
+    while head:
+        arr.append(head.val)
+        head = head.next
+    return arr
+
+# Test cases
+sol = Solution()
+print(linked_list_to_list(sol.mergeTwoLists(create_linked_list([1,2,4]), create_linked_list([1,3,4])))) # Expected: [1,1,2,3,4,4]
+print(linked_list_to_list(sol.mergeTwoLists(create_linked_list([]), create_linked_list([])))) # Expected: []
+print(linked_list_to_list(sol.mergeTwoLists(create_linked_list([]), create_linked_list([0])))) # Expected: [0]`,
+      java: `import java.util.*;
+
 /**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
- * int param_1 = obj.get(key);
- * obj.put(key,value);
- */`,
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        
+    }
+
+    // Helper function to create a linked list from an array
+    public static ListNode createLinkedList(int[] arr) {
+        if (arr.length == 0) return null;
+        ListNode head = new ListNode(arr[0]);
+        ListNode current = head;
+        for (int i = 1; i < arr.length; i++) {
+            current.next = new ListNode(arr[i]);
+            current = current.next;
+        }
+        return head;
+    }
+
+    // Helper function to print linked list
+    public static void printLinkedList(ListNode head) {
+        List<Integer> result = new ArrayList<>();
+        while (head != null) {
+            result.add(head.val);
+            head = head.next;
+        }
+        System.out.println(result);
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        printLinkedList(sol.mergeTwoLists(createLinkedList(new int[]{1,2,4}), createLinkedList(new int[]{1,3,4}))); // Expected: [1,1,2,3,4,4]
+        printLinkedList(sol.mergeTwoLists(createLinkedList(new int[]{}), createLinkedList(new int[]{}))); // Expected: []
+        printLinkedList(sol.mergeTwoLists(createLinkedList(new int[]{}), createLinkedList(new int[]{0}))); // Expected: [0]
+    }
+}`,
     },
     expectedOutput: {
-      javascript: "",
-      python: "",
-      java: "",
+      javascript: "[1,1,2,3,4,4]\n[]\n[0]",
+      python: "[1, 1, 2, 3, 4, 4]\n[]\n[0]",
+      java: "[1, 1, 2, 3, 4, 4]\n[]\n[0]",
     },
   },
 };
