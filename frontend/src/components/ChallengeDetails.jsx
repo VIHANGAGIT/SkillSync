@@ -53,8 +53,8 @@ function ChallengeDetails({ currentChallenge, currentChallengeId, handleChalleng
                     <div className="space-y-4 mb-8">
                         {currentChallenge.examples.map((example, i) => (
                             <div className="ml-4 space-y-2" key={i}>
-                                <span key={i} className="font-medium text-md mb-4">Example {i + 1}</span>
-                                <div key={i} className="bg-base-200 rounded-lg p-4 border border-base-300 mt-3">
+                                <span className="font-medium text-md mb-4">Example {i + 1}</span>
+                                <div className="bg-base-200 rounded-lg p-4 border border-base-300 mt-3">
                                     <div className="mb-2">
                                         <span className="font-medium text-xs uppercase tracking-wider block mb-1 text-primary">Input</span>
                                         <code className="bg-base-300 px-2 py-1 rounded text-sm font-mono block w-fit">{example.input}</code>
