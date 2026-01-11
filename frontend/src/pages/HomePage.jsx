@@ -1,4 +1,3 @@
-import { useUser } from '@clerk/clerk-react';
 import { Link } from 'react-router';
 import { 
   Code2, Video, BarChart2, Mic, MessageSquare, Shield, 

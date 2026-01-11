@@ -8,7 +8,7 @@ import OutputPanel from '../components/OutputPanel';
 import { Group as PanelGroup, Panel, Separator as PanelResizeHandle } from 'react-resizable-panels';
 import confetti from 'canvas-confetti';
 import toast, { Toaster } from 'react-hot-toast';
-import { executeCode } from '../lib/piston';
+import { useExecuteCode } from '../customHooks/useCode';
 
 function SolvePage() {
     const { sessionId } = useParams();
@@ -18,7 +18,7 @@ function SolvePage() {
     const [selectedLanguage, setSelectedLanguage] = useState("javascript");
     const [code, setCode] = useState("");
     const [output, setOutput] = useState("");
-    const [isRunning, setIsRunning] = useState(false);
+    const { mutateAsync: executeCode, isPending: isRunning } = useExecuteCode();
 
     const currentChallenge = challenges[currentChallengeId];
 
@@ -76,13 +76,15 @@ function SolvePage() {
     }
 
     const handleCodeExecution = async () => {
-        try{
-            setIsRunning(true);
-            setOutput("Running tests...");
-            
-            const result = await executeCode(code, selectedLanguage);
-            setOutput(result);
-            setIsRunning(false);
+        setOutput("Running tests...");
+        
+        try {
+            const result = await executeCode({ sourceCode: code, language: selectedLanguage });
+            setOutput({
+                success: result.success,
+                output: result.output,
+                error: result.stderr
+            });
                 
             if (result.success) {
                 const expectedOutput = currentChallenge.expectedOutput[selectedLanguage];
@@ -97,10 +99,9 @@ function SolvePage() {
             } else {
                 toast.error("Error during code execution. See output for details.");
             }
-        } finally {
-            setIsRunning(false);
+        } catch (error) {
+            console.error(error);
         }
-        
     }
 
     if (!currentChallenge) return <div className="min-h-screen flex items-center justify-center bg-base-200"><span className="loading loading-spinner loading-lg"></span></div>;

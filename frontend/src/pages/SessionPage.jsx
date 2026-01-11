@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { Group as PanelGroup, Panel, Separator as PanelResizeHandle } from 'react-resizable-panels';
 import CodeEditor from "../components/CodeEditor";
 import OutputPanel from "../components/OutputPanel";
-import { executeCode } from "../lib/piston";
+import { useExecuteCode } from "../customHooks/useCode";
 import { getDifficultyColor } from "../lib/utils";
 import { LogOut, PhoneOff } from "lucide-react";
 import useStreamClient from "../customHooks/useStreamClient";
@@ -22,7 +22,7 @@ function SessionPage() {
     const { sessionId } = useParams();
     const { user } = useUser();
     const [output, setOutput] = useState(null);
-    const [isRunning, setIsRunning] = useState(false);
+    const { mutateAsync: executeCode, isPending: isRunning } = useExecuteCode();
     const [showEndSessionModal, setShowEndSessionModal] = useState(false);
     
     const joinSessionMutation = useJoinSession();
@@ -82,14 +82,16 @@ function SessionPage() {
     }
 
     const handleCodeExecution = async () => {
-      try{
-        setIsRunning(true);
-        setOutput(null);
-
-        const result = await executeCode(code, selectedLanguage, challengeData?.testCases || []);
-        setOutput(result);
-      } finally {
-        setIsRunning(false);
+      setOutput(null);
+      try {
+        const result = await executeCode({ sourceCode: code, language: selectedLanguage });
+        setOutput({
+          success: result.success,
+          output: result.output,
+          error: result.stderr
+        });
+      } catch (error) {
+        console.error(error);
       }
     }
 
